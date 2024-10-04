@@ -1,0 +1,68 @@
+[gd_scene load_steps=12 format=3 uid="uid://ctacg8dmbrvb"]
+
+[ext_resource type="Script" path="res://level_1.gd" id="1_o1dvh"]
+[ext_resource type="Script" path="res://robot_vac.gd" id="2_nfxsq"]
+[ext_resource type="PackedScene" uid="uid://n3hsuro2bdar" path="res://RobotVac.tscn" id="3_c8f1i"]
+[ext_resource type="Script" path="res://trace_mesh.gd" id="4_as755"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_hhyf4"]
+size = Vector3(10, 0.5, 10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qjt5u"]
+albedo_color = Color(0.834878, 0.901914, 0.995113, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1hksq"]
+size = Vector3(10, 0.5, 10)
+
+[sub_resource type="BoxMesh" id="BoxMesh_k01xc"]
+size = Vector3(4, 2, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yia4j"]
+albedo_color = Color(0.0980392, 1, 1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qaoqa"]
+size = Vector3(4, 2, 0.5)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_3ntbm"]
+radius = 0.25
+height = 0.5
+
+[node name="Level1" type="Node3D"]
+script = ExtResource("1_o1dvh")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.536254, 0.844057, 0, -0.844057, 0.536254, 0, 10.9482, 8.65488)
+
+[node name="Floor" type="StaticBody3D" parent="."]
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("BoxMesh_hhyf4")
+surface_material_override/0 = SubResource("StandardMaterial3D_qjt5u")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("BoxShape3D_1hksq")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.0266305, 0.999645, 0, -0.999645, 0.0266305, 0, 9.09091, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+mesh = SubResource("BoxMesh_k01xc")
+surface_material_override/0 = SubResource("StandardMaterial3D_yia4j")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+shape = SubResource("BoxShape3D_qaoqa")
+
+[node name="RobotVac" parent="." instance=ExtResource("3_c8f1i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.87989, 0.5, 3.17582)
+script = ExtResource("2_nfxsq")
+
+[node name="TraceMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.88, 0.5, 3.176)
+mesh = SubResource("CapsuleMesh_3ntbm")
+script = ExtResource("4_as755")
